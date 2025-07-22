@@ -9,3 +9,9 @@ Project helps people protect or detend to some vulnerability about website.
 -  Backup dữ liệu ra file và lưu trên máy
 
 Template is referenced at: https://templatemo.com/.
+
+Bankend -> python
+
+Frontend -> html, css, js
+
+Database -> SQLServer or PostgreSQL

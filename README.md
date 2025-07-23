@@ -11,9 +11,9 @@ Project helps people protect or detend to some vulnerability about website.
 Template is referenced at: https://templatemo.com/.
 
 Note:
-  Bankend -> python
-  Frontend -> html, css, js
-  Database -> SQLServer or PostgreSQL
+  - Bankend -> python
+  - Frontend -> html, css, js
+  - Database -> SQLServer or PostgreSQL
 Email authori: Create an "App Password"
 > Go to: https://myaccount.google.com/apppasswords
 > Get password

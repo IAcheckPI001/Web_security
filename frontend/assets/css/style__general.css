@@ -1,0 +1,106 @@
+
+body, html {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: Canva Sans, Noto Sans Variable, Noto Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,sans-serif;
+}
+
+.id__font__normal{
+    font-family: Calibri;
+}
+
+:root {
+    --white: #ffffff;
+    --black: #000000;
+    --gray: #363636;
+    --color__font-models: rgb(113, 113, 113);
+    --color__font-models--hover: rgb(28, 86, 202);
+    --title-company: #0e2a47;
+    --header__style--title: 56px;
+    --size-padding-top__header__models: calc(1em *10/12);
+    --size-padding-bottom__header__models:calc(1em *10/16);
+    --size-padding-left__header__models:calc(1em);
+    --size-padding-right__header__models:calc(1em);
+    --size-width-bars__model:calc(245px)
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: #1b1b1d;
+}
+
+ul, ol {
+    list-style-type: none;
+}
+
+.img__style{
+    width: 100%;
+    height: 100%;
+}
+
+.scope__constant {
+    flex-shrink: 0;
+}
+
+.overflow--hidden {
+    overflow: hidden;
+}
+
+.overflow-x--hidden {
+    overflow-x: hidden;    
+}
+
+.fa-icon__style {
+    font-size: 20px;
+    color: #232121
+}
+
+.title--back {
+    margin-top: 16px; 
+    font-size: 17px; 
+    font-weight: 700; 
+    color: #2e2e35;
+}
+
+.title--back:hover {
+    color: var(--color__font-models--hover);
+}
+
+.title__models__style {
+    font-size: 1rem;
+    line-height: 2.2rem;
+    color: aliceblue;
+    font-family: Canva Sans,Noto Sans Variable,Noto Sans,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;
+}
+
+#guider__WebAI{
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column; 
+}
+
+.separate {
+    font-family: inherit;
+    align-items: center;
+    border-bottom: 1px solid #dadde1;
+    display: flex;
+    margin: 20px 66px;
+    text-align: center;
+}
+
+#loading__WebAI {
+    background: var(--white) url(../img/AIFurture.gif) no-repeat center center;
+    height: 100vh;
+    width: 100%;
+    background-size: 15%;
+    position: fixed;
+    z-index: 10000;
+}

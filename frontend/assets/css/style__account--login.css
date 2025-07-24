@@ -1,0 +1,155 @@
+#account_container {
+    height: 580px;
+    display: flex;
+    padding-top: 6px;
+    padding-bottom: 76px;
+    justify-content: space-evenly;
+    background-color: #f0f2f5;
+    flex-direction: column;
+    align-items: center;
+}
+
+#frame_webAI {
+    background-color: rgb(240, 242, 245);
+}
+
+#frame_webAI a #home--back {
+    display: flex;
+    align-items: center;
+}
+
+#frame_webAI a #home--back #arrow__page {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+#frame_webAI a #home--back .arrow__style {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+    background-color: rgb(240, 242, 245);
+    padding-left: 24px;
+    padding-top: 18px;
+}
+
+#account_container .login--input {
+    height: auto;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    padding: 15px 0 23px;
+    width: 438px;
+}
+
+#logo a .logo_style{
+    width: auto;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#login__style--input .frame--input {
+    font-size: 17px;
+    width: 450px;
+    margin: auto;
+    margin-top: 10px;
+    display: inline-block;
+    padding: 6px 0;
+}
+
+#account_container .login--input #login__style--input {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+}
+
+#account_container .login--input #login__style--input #logo{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+}
+
+#account_container .login--input #login__style--input #logo span{
+    font-size: 23px;
+    margin-top: 10px;
+    margin-bottom: 33px;
+    color: #232121;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+#account_container .login--input .frame--input .username,
+#account_container .login--input .frame--input .password {
+    font-family: inherit;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-left: 40px;
+    margin-bottom: 25px;
+    font-size: 18px;
+    width: 330px;
+    background: #FFFFFF url() repeat-x;
+    border: 1px solid #dddfe2;
+    color: #1d2129;
+    height: 22px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+
+
+#account_container .login--input .frame--input ::placeholder {
+    color: #90949c;
+    font-size: 17px;
+  }
+
+#account_container .login--input .frame--input .btn--login,
+#account_container .login--input .frame--input .btn--sigup {
+    font-family: inherit;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    line-height: 48px;
+    padding: 0 16px;
+    width: 332px;
+    margin-left: 40px;
+    cursor: pointer;
+    color: #fff;
+    background-color: rgb(130 130 214);
+    box-sizing: content-box;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+}
+
+#account_container .login--input .frame--input .password--forget {
+    margin-top: 24px;
+    margin-left: 39px;
+    padding: 0px 42px;
+}
+
+.error_login {
+    color: #b62929;
+    margin-left: 43px;
+    padding-right: 4px;
+    padding-left: 4px;
+    width: 351px;
+    background-color: antiquewhite;
+    display: block;
+}
+
+#style__note--sigup{
+    list-style-type: circle;
+    margin-left: 37px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #8d8d8d;
+}
+
+.style_position--note {
+    display: flex;
+    align-items: center;
+}

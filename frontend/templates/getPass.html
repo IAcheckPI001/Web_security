@@ -1,0 +1,47 @@
+{% extends "baseLogin.html" %} {% block title %}Sign in{% endblock %} {% block content%}
+<div id="loading_WebAI"></div>
+<div id="frame_webAI">
+    <a href="/sign-in">
+        <div id="home--back">
+            <div id="arrow__page" class="arrow__style">
+                <svg height="25" width="26" style="margin-top: 2px;">
+                    <polyline points="18 17 12 12 18 7" style="fill: none; stroke: #5a5a5a; stroke-width: 3px;"></polyline>
+                </svg>
+            </div>
+            <span class="title--back">Quay lại</span>
+        </div>
+    </a>
+    <div id="account_container">
+        <div class="login--input">
+            <div id="login__style--input">
+                <div id="logo">
+                    <a href="/index">
+                        <img class="logo_style" src="{{ url_for('static',filename='img/apple-icon.png') }}" alt="logo-Web">
+                    </a>
+                    <span>Xác thực tài khoản email</span>
+                </div>
+                <div class="frame--input">
+                    <form method="POST">
+                        <input class="username" name="email_user" style="margin-bottom: 5px; border-color: rgb(221, 223, 226)" placeholder ="Email address" type="text" required pattern="\S+"/>
+                        
+                        {% if error %}
+                            <span class ="error_login" style="display: block">Lỗi định dạng email ! example@gmail.com</span>
+                        {% elif error1 %}
+                            <span class ="error_login" style="display: block">Email chưa được đăng ký!</span>
+                        {% endif %}
+                        <button id="btn_sigup" class="btn--sigup" style="margin-top: 13px;" name="pass--get">Confirm</button>
+                        <div class="password--forget" style="padding: 0px 59px;">
+                            <span style="color:#75757c;">Bạn cần hỗ trợ ?</span>
+                            <a href="" style="color:#aa6b4d;"><span>Help account</span></a>
+                        </div>
+                        <div class="separate"> </div>
+                    </form>
+                    <a href="/sign-in">
+                        <button class="btn--login" style="background-color: chartreuse;">Login</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

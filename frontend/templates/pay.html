@@ -1,0 +1,287 @@
+{% extends "baseView.html" %} {% block title %}AIShop{% endblock %} {% block content%}
+    <div id="main" class="wrapper">
+        <div class="page-container container ">
+            <div id="main-content" class="row">
+                <div id="primary" class="site-content">
+                    <article>
+                        <div class="col-md-12">
+                            <div class="breadcrumb clearfix">
+                                <ul style="display: flex;">
+                                    <li itemtype="http://shema.org/Breadcrumb" itemscope="" class="home">
+                                        <a title="Đến trang chủ" href="/" itemprop="url">
+                                            <span itemprop="title" class ="title_home">Trang chủ</span>
+                                        </a>
+                                    </li>
+                                    <li class="icon-li">
+                                        <strong style="font-size: 17px; color: black; font-weight: bold;">Giỏ hàng</strong>
+                                    </li>
+                                    <li class="icon-li">
+                                        <strong style="font-size: 17px; color: black; font-weight: bold;">Thanh toán</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                            <script type="text/javascript">
+                                $(".link-site-more").hover(function () { $(this).find(".s-c-n").show(); }, function () { $(this).find(".s-c-n").hide(); });
+                            </script>
+                            <div class="cart-content ng-scope" ng-controller="orderController" ng-init="initOrderCartController()">
+                                <h1 class="title"><span>THANH TOÁN</span></h1>
+                                <div class="steps clearfix">
+                                    <ul class="clearfix_check" style="display: flex;">
+                                        <hr class="styled-hr" style="height: 3px">
+                                        <li class="cart active col-md-2 col-xs-12 col-sm-4 col-md-offset-3 col-sm-offset-0 col-xs-offset-0"><span><i class="fa fa-shopping-cart"></i></span><span style="color: #7aaedd; font-size: 15px; font-weight: 500; background-color: #fbfbfb;">Giỏ hàng của tôi</span><span class="step-number"><a>1</a></span></li>
+                                        <li class="payment col-md-2 col-xs-12 col-sm-4"><span><i class="fa fa-credit-card" style="color: #2f7abe;" aria-hidden="true"></i></span><span style="color: #7aaedd; font-size: 15px;font-weight: 500; background-color: #fbfbfb;">Thanh toán</span><span class="step-number"><a  style="color: #ffffff; background-color: #2f7abe;">2</a></span></li>
+                                        <li class="finish col-md-2 col-xs-12 col-sm-4"><span><i class="fa fa-check"></i></span><span style="font-size: 15px;font-weight: 500; background-color: #fbfbfb;">Hoàn tất</span><span class="step-number"><a>3</a></span></li>
+                                    </ul>
+                                </div>
+                                <form method="post" class="payment-block clearfix ng-pristine ng-invalid ng-invalid-required ng-valid-email" id="checkout-container">
+                                    {% if data_time %}
+                                    <div class="col-md-4 col-sm-12 col-xs-12 payment-step step2">
+                                        <h4>1. Thông tin KH, địa chỉ thanh toán</h4>
+                                        <div class="step-preview clearfix">
+                                            <h2 class="title">Thông tin khách hàng</h2>
+                                            <div class="form-block ng-scope" ng-if="CustomerId<=0">
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Họ &amp; Tên" type="text" name="name" value="{{data_time['name']}}" required=""></div>
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Số điện thoại" type="text" name="phone" value="{{data_time['phone']}}" required=""></div>
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Email" type="email" name="email" value="{{data_time['email']}}" required=""></div>
+                                                <h2 class="title" style="margin-top: 5px;">Địa chỉ nhận hàng</h2>
+                                                <div class="form-group">
+                                                    {% if check_err %}
+                                                        <select class="ng-pristine ng-untouched ng-invalid ng-invalid-required form-control_err" name="city_address" ng-options="item.Id as item.Name for item in Provinces" ng-change="changeCustomerProvince()" required>
+                                                            <option selected="selected" value="0" label="Vui lòng chọn tỉnh/thành phố">Vui lòng chọn tỉnh/thành phố</option>
+                                                            <option value="Hồ Chí Minh" label="Hồ Chí Minh">Hồ Chí Minh</option>
+                                                            <option value="Hà Nội" label="Hà Nội">Hà Nội</option>
+                                                            <option value="Đà Nẵng" label="Đà Nẵng">Đà Nẵng</option>
+                                                            <option value="Cần Thơ label" label="Cần Thơ">Cần Thơ</option>
+                                                            <option value="Thừa Thiên - Huế" label=" Thừa Thiên - Huế"> Thừa Thiên - Huế</option>
+                                                            <option value="An Giang" label="An Giang">An Giang</option>
+                                                            <option value="Bà Rịa-Vũng Tàu" label="Bà Rịa-Vũng Tàu">Bà Rịa-Vũng Tàu</option>
+                                                            <option value="Bạc Liêu" label="Bạc Liêu">Bạc Liêu</option>
+                                                            <option value="Bắc Kạn" label="Bắc Kạn">Bắc Kạn</option>
+                                                            <option value="Bắc Giang" label="Bắc Giang">Bắc Giang</option>
+                                                            <option value="Bắc Ninh" label="Bắc Ninh">Bắc Ninh</option>
+                                                            <option value="Bến Tre" label="Bến Tre">Bến Tre</option>
+                                                            <option value="Bình Dương" label="Bình Dương">Bình Dương</option>
+                                                            <option value="Bình Định" label="Bình Định">Bình Định</option>
+                                                            <option value="Bình Phước" label="Bình Phước">Bình Phước</option>
+                                                            <option value="Bình Thuận" label="Bình Thuận">Bình Thuận</option>
+                                                            <option value="Cà Mau" label="Cà Mau">Cà Mau</option>
+                                                            <option value="Cao Bằng" label="Cao Bằng">Cao Bằng</option>
+                                                            <option value="Đắk Lắk" label="Đắk Lắk">Đắk Lắk</option>
+                                                            <option value="Đắk Nông" label="Đắk Nông">Đắk Nông</option>
+                                                            <option value="number:21" label="Điện Biên">Điện Biên</option>
+                                                            <option value="number:22" label="Đồng Nai">Đồng Nai</option>
+                                                            <option value="number:23" label="Đồng Tháp">Đồng Tháp</option>
+                                                            <option value="number:24" label="Gia Lai">Gia Lai</option>
+                                                            <option value="number:25" label="Hà Giang">Hà Giang</option>
+                                                            <option value="number:26" label="Hà Nam">Hà Nam</option>
+                                                            <option value="number:27" label="Hà Tây">Hà Tây</option><option value="number:28" label="Hà Tĩnh">Hà Tĩnh</option><option value="number:29" label="Hải Dương">Hải Dương</option><option value="number:30" label="Hải Phòng">Hải Phòng</option><option value="number:31" label="Hòa Bình">Hòa Bình</option><option value="number:32" label="Hậu Giang">Hậu Giang</option><option value="number:33" label="Hưng Yên">Hưng Yên</option><option value="number:34" label="Khánh Hòa">Khánh Hòa</option><option value="number:35" label="Kiên Giang">Kiên Giang</option><option value="number:36" label="Kon Tum">Kon Tum</option><option value="number:37" label="Lai Châu">Lai Châu</option><option value="number:38" label="Lào Cai">Lào Cai</option><option value="number:39" label="Lạng Sơn">Lạng Sơn</option><option value="number:40" label="Lâm Đồng">Lâm Đồng</option><option value="number:41" label="Long An">Long An</option><option value="number:42" label="Nam Định">Nam Định</option><option value="number:43" label="Nghệ An">Nghệ An</option><option value="number:44" label="Ninh Bình">Ninh Bình</option><option value="number:45" label="Ninh Thuận">Ninh Thuận</option><option value="number:46" label="Phú Thọ">Phú Thọ</option><option value="number:47" label="Phú Yên">Phú Yên</option><option value="number:48" label="Quảng Bình">Quảng Bình</option><option value="number:49" label="Quảng Nam">Quảng Nam</option><option value="number:50" label="Quảng Ngãi">Quảng Ngãi</option><option value="number:51" label="Quảng Ninh">Quảng Ninh</option><option value="number:52" label="Quảng Trị">Quảng Trị</option><option value="number:53" label="Sóc Trăng">Sóc Trăng</option><option value="number:54" label="Sơn La">Sơn La</option><option value="number:55" label="Tây Ninh">Tây Ninh</option><option value="number:56" label="Thái Bình">Thái Bình</option><option value="number:57" label="Thái Nguyên">Thái Nguyên</option><option value="number:58" label="Thanh Hóa">Thanh Hóa</option><option value="number:59" label="Thừa Thiên - Huế">Thừa Thiên - Huế</option><option value="number:60" label="Tiền Giang">Tiền Giang</option><option value="number:61" label="Trà Vinh">Trà Vinh</option><option value="number:62" label="Tuyên Quang">Tuyên Quang</option><option value="number:63" label="Vĩnh Long">Vĩnh Long</option><option value="Vĩnh Phúc" label="Vĩnh Phúc">Vĩnh Phúc</option><option value="Yên Bái" label="Yên Bái">Yên Bái</option></select>
+                                                    {% else %}
+                                                        <select class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" name="city_address" ng-options="item.Id as item.Name for item in Provinces" ng-change="changeCustomerProvince()" required>
+                                                            <option selected="selected" value="0" label="Vui lòng chọn tỉnh/thành phố">Vui lòng chọn tỉnh/thành phố</option>
+                                                            <option value="Hồ Chí Minh" label="Hồ Chí Minh">Hồ Chí Minh</option>
+                                                            <option value="Hà Nội" label="Hà Nội">Hà Nội</option>
+                                                            <option value="Đà Nẵng" label="Đà Nẵng">Đà Nẵng</option>
+                                                            <option value="Cần Thơ label" label="Cần Thơ">Cần Thơ</option>
+                                                            <option value="Thừa Thiên - Huế" label=" Thừa Thiên - Huế"> Thừa Thiên - Huế</option>
+                                                            <option value="An Giang" label="An Giang">An Giang</option>
+                                                            <option value="Bà Rịa-Vũng Tàu" label="Bà Rịa-Vũng Tàu">Bà Rịa-Vũng Tàu</option>
+                                                            <option value="Bạc Liêu" label="Bạc Liêu">Bạc Liêu</option>
+                                                            <option value="Bắc Kạn" label="Bắc Kạn">Bắc Kạn</option>
+                                                            <option value="Bắc Giang" label="Bắc Giang">Bắc Giang</option>
+                                                            <option value="Bắc Ninh" label="Bắc Ninh">Bắc Ninh</option>
+                                                            <option value="Bến Tre" label="Bến Tre">Bến Tre</option>
+                                                            <option value="Bình Dương" label="Bình Dương">Bình Dương</option>
+                                                            <option value="Bình Định" label="Bình Định">Bình Định</option>
+                                                            <option value="Bình Phước" label="Bình Phước">Bình Phước</option>
+                                                            <option value="Bình Thuận" label="Bình Thuận">Bình Thuận</option>
+                                                            <option value="Cà Mau" label="Cà Mau">Cà Mau</option>
+                                                            <option value="Cao Bằng" label="Cao Bằng">Cao Bằng</option>
+                                                            <option value="Đắk Lắk" label="Đắk Lắk">Đắk Lắk</option>
+                                                            <option value="Đắk Nông" label="Đắk Nông">Đắk Nông</option>
+                                                            <option value="number:21" label="Điện Biên">Điện Biên</option>
+                                                            <option value="number:22" label="Đồng Nai">Đồng Nai</option>
+                                                            <option value="number:23" label="Đồng Tháp">Đồng Tháp</option>
+                                                            <option value="number:24" label="Gia Lai">Gia Lai</option>
+                                                            <option value="number:25" label="Hà Giang">Hà Giang</option>
+                                                            <option value="number:26" label="Hà Nam">Hà Nam</option>
+                                                            <option value="number:27" label="Hà Tây">Hà Tây</option><option value="number:28" label="Hà Tĩnh">Hà Tĩnh</option><option value="number:29" label="Hải Dương">Hải Dương</option><option value="number:30" label="Hải Phòng">Hải Phòng</option><option value="number:31" label="Hòa Bình">Hòa Bình</option><option value="number:32" label="Hậu Giang">Hậu Giang</option><option value="number:33" label="Hưng Yên">Hưng Yên</option><option value="number:34" label="Khánh Hòa">Khánh Hòa</option><option value="number:35" label="Kiên Giang">Kiên Giang</option><option value="number:36" label="Kon Tum">Kon Tum</option><option value="number:37" label="Lai Châu">Lai Châu</option><option value="number:38" label="Lào Cai">Lào Cai</option><option value="number:39" label="Lạng Sơn">Lạng Sơn</option><option value="number:40" label="Lâm Đồng">Lâm Đồng</option><option value="number:41" label="Long An">Long An</option><option value="number:42" label="Nam Định">Nam Định</option><option value="number:43" label="Nghệ An">Nghệ An</option><option value="number:44" label="Ninh Bình">Ninh Bình</option><option value="number:45" label="Ninh Thuận">Ninh Thuận</option><option value="number:46" label="Phú Thọ">Phú Thọ</option><option value="number:47" label="Phú Yên">Phú Yên</option><option value="number:48" label="Quảng Bình">Quảng Bình</option><option value="number:49" label="Quảng Nam">Quảng Nam</option><option value="number:50" label="Quảng Ngãi">Quảng Ngãi</option><option value="number:51" label="Quảng Ninh">Quảng Ninh</option><option value="number:52" label="Quảng Trị">Quảng Trị</option><option value="number:53" label="Sóc Trăng">Sóc Trăng</option><option value="number:54" label="Sơn La">Sơn La</option><option value="number:55" label="Tây Ninh">Tây Ninh</option><option value="number:56" label="Thái Bình">Thái Bình</option><option value="number:57" label="Thái Nguyên">Thái Nguyên</option><option value="number:58" label="Thanh Hóa">Thanh Hóa</option><option value="number:59" label="Thừa Thiên - Huế">Thừa Thiên - Huế</option><option value="number:60" label="Tiền Giang">Tiền Giang</option><option value="number:61" label="Trà Vinh">Trà Vinh</option><option value="number:62" label="Tuyên Quang">Tuyên Quang</option><option value="number:63" label="Vĩnh Long">Vĩnh Long</option><option value="Vĩnh Phúc" label="Vĩnh Phúc">Vĩnh Phúc</option><option value="Yên Bái" label="Yên Bái">Yên Bái</option></select>
+                                                    {% endif %}
+                                                </div>
+                                                <textarea class="form-control ng-pristine ng-untouched ng-valid" style="font-size: 15px !important; font-weight: 400 !important;" rows="4" placeholder="Ghi chú đơn hàng" name="note_address">{{data_time['note_address']}}</textarea>
+                                                {% if charValid %}
+                                                    <span class="error_login" style="display: block; margin-top: 10px; margin-left: 0;">Giá trị không chứa ký tự đặc biệt ! Vui lòng thử lại.</span>
+                                                {%endif%}                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="col-md-4 col-sm-12 col-xs-12 payment-step step2">
+                                        <h4>1. Thông tin KH, địa chỉ thanh toán</h4>
+                                        <div class="step-preview clearfix">
+                                            <h2 class="title">Thông tin khách hàng</h2>
+                                            <div class="form-block ng-scope" ng-if="CustomerId<=0">
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Họ &amp; Tên" type="text" name="name" required=""></div>
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Số điện thoại" type="text" name="phone" required=""></div>
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Email" type="email" name="email" required=""></div>
+                                                <h2 class="title" style="margin-top: 5px;">Địa chỉ nhận hàng</h2>
+                                                <div class="form-group">
+                                                    <select class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" name="city_address" ng-options="item.Id as item.Name for item in Provinces" ng-change="changeCustomerProvince()" required>
+                                                        <option selected="selected" value="0" label="Vui lòng chọn tỉnh/thành phố">Vui lòng chọn tỉnh/thành phố</option>
+                                                        <option value="Hồ Chí Minh" label="Hồ Chí Minh">Hồ Chí Minh</option>
+                                                        <option value="Hà Nội" label="Hà Nội">Hà Nội</option>
+                                                        <option value="Đà Nẵng" label="Đà Nẵng">Đà Nẵng</option>
+                                                        <option value="Cần Thơ label" label="Cần Thơ">Cần Thơ</option>
+                                                        <option value="Thừa Thiên - Huế" label=" Thừa Thiên - Huế"> Thừa Thiên - Huế</option>
+                                                        <option value="An Giang" label="An Giang">An Giang</option>
+                                                        <option value="Bà Rịa-Vũng Tàu" label="Bà Rịa-Vũng Tàu">Bà Rịa-Vũng Tàu</option>
+                                                        <option value="Bạc Liêu" label="Bạc Liêu">Bạc Liêu</option>
+                                                        <option value="Bắc Kạn" label="Bắc Kạn">Bắc Kạn</option>
+                                                        <option value="Bắc Giang" label="Bắc Giang">Bắc Giang</option>
+                                                        <option value="Bắc Ninh" label="Bắc Ninh">Bắc Ninh</option>
+                                                        <option value="Bến Tre" label="Bến Tre">Bến Tre</option>
+                                                        <option value="Bình Dương" label="Bình Dương">Bình Dương</option>
+                                                        <option value="Bình Định" label="Bình Định">Bình Định</option>
+                                                        <option value="Bình Phước" label="Bình Phước">Bình Phước</option>
+                                                        <option value="Bình Thuận" label="Bình Thuận">Bình Thuận</option>
+                                                        <option value="Cà Mau" label="Cà Mau">Cà Mau</option>
+                                                        <option value="Cao Bằng" label="Cao Bằng">Cao Bằng</option><option value="Đắk Lắk" label="Đắk Lắk">Đắk Lắk</option><option value="number:20" label="Đắk Nông">Đắk Nông</option><option value="number:21" label="Điện Biên">Điện Biên</option><option value="number:22" label="Đồng Nai">Đồng Nai</option><option value="number:23" label="Đồng Tháp">Đồng Tháp</option><option value="number:24" label="Gia Lai">Gia Lai</option><option value="number:25" label="Hà Giang">Hà Giang</option><option value="number:26" label="Hà Nam">Hà Nam</option><option value="number:27" label="Hà Tây">Hà Tây</option><option value="number:28" label="Hà Tĩnh">Hà Tĩnh</option><option value="number:29" label="Hải Dương">Hải Dương</option><option value="number:30" label="Hải Phòng">Hải Phòng</option><option value="number:31" label="Hòa Bình">Hòa Bình</option><option value="number:32" label="Hậu Giang">Hậu Giang</option><option value="number:33" label="Hưng Yên">Hưng Yên</option><option value="number:34" label="Khánh Hòa">Khánh Hòa</option><option value="number:35" label="Kiên Giang">Kiên Giang</option><option value="number:36" label="Kon Tum">Kon Tum</option><option value="number:37" label="Lai Châu">Lai Châu</option><option value="number:38" label="Lào Cai">Lào Cai</option><option value="number:39" label="Lạng Sơn">Lạng Sơn</option><option value="number:40" label="Lâm Đồng">Lâm Đồng</option><option value="number:41" label="Long An">Long An</option><option value="number:42" label="Nam Định">Nam Định</option><option value="number:43" label="Nghệ An">Nghệ An</option><option value="number:44" label="Ninh Bình">Ninh Bình</option><option value="number:45" label="Ninh Thuận">Ninh Thuận</option><option value="number:46" label="Phú Thọ">Phú Thọ</option><option value="number:47" label="Phú Yên">Phú Yên</option><option value="number:48" label="Quảng Bình">Quảng Bình</option><option value="number:49" label="Quảng Nam">Quảng Nam</option><option value="number:50" label="Quảng Ngãi">Quảng Ngãi</option><option value="number:51" label="Quảng Ninh">Quảng Ninh</option><option value="number:52" label="Quảng Trị">Quảng Trị</option><option value="number:53" label="Sóc Trăng">Sóc Trăng</option><option value="number:54" label="Sơn La">Sơn La</option><option value="number:55" label="Tây Ninh">Tây Ninh</option><option value="number:56" label="Thái Bình">Thái Bình</option><option value="number:57" label="Thái Nguyên">Thái Nguyên</option><option value="number:58" label="Thanh Hóa">Thanh Hóa</option><option value="number:59" label="Thừa Thiên - Huế">Thừa Thiên - Huế</option><option value="number:60" label="Tiền Giang">Tiền Giang</option><option value="number:61" label="Trà Vinh">Trà Vinh</option><option value="number:62" label="Tuyên Quang">Tuyên Quang</option><option value="number:63" label="Vĩnh Long">Vĩnh Long</option><option value="Vĩnh Phúc" label="Vĩnh Phúc">Vĩnh Phúc</option><option value="Yên Bái" label="Yên Bái">Yên Bái</option></select>
+                                                </div>
+                                                <label style="margin-left: 5px; font-size: 14px !important; color: #595959; font-weight: bold !important;" for="bankcode"><span style="color: red;">* </span> Chi tiết địa chỉ: (Số nhà, Phường, Xã,...)</label>
+                                                <textarea class="form-control ng-pristine ng-untouched ng-valid" rows="4" placeholder="Ghi chú đơn hàng" name="note_address" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-md-4 col-sm-12 col-xs-12 payment-step step3">
+                                        <h4>2. Hình thức thanh toán</h4>
+                                        <div class="step-preview clearfix">
+                                            <h2 class="title">Thanh toán điện tử</h2>   
+                                            <div class="form-group">
+                                                <label for="bankcode">Ngân hàng</label>
+                                                <select name="bankcode" id="bankcode" class="form-control">
+                                                    <option value="default">Chọn ngân hàng thanh toán</option>    
+                                                    <option value="VISA">VISA</option>
+                                                    <option value="MASTERCARD"> MASTERCARD</option>
+                                                    <option value="JCB">JCB</option>
+                                                    <option value="NCB">Ngan hang NCB</option>
+                                                    <option value="EXIMBANK">Ngan hang EximBank </option>
+                                                </select>
+                                            </div>
+                                            <div id="card_pay_VISA" style="display: none;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <label for="bankcode">Thông tin thẻ</label>                                                          
+                                                    <div class="input-extend input-extend-right">
+                                                    <div class="input-box input-ic-clear"></div>
+                                                        <div class="input-box input-extend-inner">
+                                                            <div class="logo-brands-small">
+                                                                <img src="./assets/img/logos/bank/visa.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="card_pay_MASTERCARD" style="display: none;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <label for="bankcode">Thông tin thẻ</label>
+                                                    <div class="input-extend input-extend-right">
+                                                        <div class="input-box input-ic-clear"></div>
+                                                        <div class="input-box input-extend-inner">
+                                                            <div class="logo-brands-small">
+                                                                <img src="./assets/img/logos/bank/mastercard.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="card_pay_JCB" style="display: none;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <label for="bankcode">Thông tin thẻ</label>                                                          
+                                                    <div class="input-extend input-extend-right">
+                                                    <div class="input-box input-ic-clear"></div>
+                                                        <div class="input-box input-extend-inner">
+                                                            <div class="logo-brands-small">
+                                                                <img src="./assets/img/logos/bank/jcb.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="card_pay_NCB" style="display: none;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <label for="bankcode">Thông tin thẻ</label>
+                                                    <div class="input-extend input-extend-right">
+                                                    <div class="input-box input-ic-clear"></div>
+                                                        <div class="input-box input-extend-inner">
+                                                            <div class="logo-brands-small">
+                                                                <img src="./assets/img/logos/bank/ncb.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="card_pay_EXIMBANK" style="display: none;">
+                                                <div style="display: flex; align-items: center;">
+                                                    <label for="bankcode">Thông tin thẻ</label>                                                          
+                                                    <div class="input-extend input-extend-right">
+                                                    <div class="input-box input-ic-clear"></div>
+                                                        <div class="input-box input-extend-inner">
+                                                            <div class="logo-brands-small">
+                                                                <img src="./assets/img/logos/bank/eximBank.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="card_pay" style="display: none;">
+                                                <label class="label_pay" for="bankcode"><span style="color: red;">* </span>Số thẻ: </label>   
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required font_pay" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Nhập số thẻ" type="digits" name="card_number" required=""></div>  
+                                                <div style="display: flex; justify-content: space-between;">
+                                                    <label class="label_pay" style="flex: 0.4;" for="bankcode"><span style="color: red;">* </span>Ngày hết hạn: </label>
+                                                    <label class="label_pay" style="flex: 0.38;" for="bankcode"><span style="color: red;">* </span>CVC/CVV: </label>
+                                                </div>
+                                                <div style="display: flex;">
+                                                    <div class="form-group" style="margin-right: 4px;"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required font_pay" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="MM/YY" type="text" name="date_HH" required=""></div>
+                                                    <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required font_pay" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="CVC/CVV" type="digits" name="cvc_cvv" required=""></div>
+                                                </div>  
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input id="resetCheckbox" type="checkbox" onclick="toggleDeliveryAddress()" name="check_pay_off" class="ng-pristine ng-untouched ng-valid"> Thanh toán khi nhận hàng
+                                                </label>
+                                            </div>
+                                            {% if isValid %}
+                                                <span class="error_login" style="display: block; margin-bottom: 22px; margin-left: 0;">Đã có vấn đề ở đây! Giá trị thẻ bạn nhập chưa đúng -> Vui lòng thử lại </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12 col-xs-12 payment-step step1">
+                                        <h4>3. Thông tin đơn hàng</h4>
+                                        <div class="step-preview">
+                                            <div class="cart-info">
+                                                <div class="cart-items">
+                                                </div>
+                                                <div class="total-payment">
+                                                    Thành tiền  <span class="ng-binding"> {{total_price}}</span>
+                                                </div>
+                                                <div class="total-payment">
+                                                    Phí vận chuyển  <span class="ng-binding">0 ₫</span>
+                                                </div>
+                                                <div class="total-payment">
+                                                    Thanh toán <span class="ng-binding">{{total_price}}</span>
+                                                </div>
+                                                <div class="button-submit">
+                                                    <button name="order-submit" class="btn button button-secondary" type="submit">Đặt hàng</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="token_id" value="{{token}}">
+                                </form>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

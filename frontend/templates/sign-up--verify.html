@@ -1,0 +1,62 @@
+{% extends "baseLogin.html" %} {% block title %}Sign up - verify{% endblock %} {% block content%}
+{% if dialog %}
+<div id="dialog" style="display: block;" >
+    <h2 style="color: aliceblue; font-size: 17px;">Thông báo</h2>
+    <div style="display: flex; align-items: center;">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1rem" width="1rem" viewBox="0 0 512 512">
+            <path style="fill: aliceblue;" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+        </svg>
+        <p style="font-size: 18px !important; font-weight: 400 !important; margin: 0 0 0 8px;">Thực hiện đăng nhập sai quá số lần. Vui lòng xác thực qua email để cập nhật lại tài khoản!<br> Kiểm thử tại giỏ hàng</p>
+        <br>
+    </div>
+</div>
+{%endif%}
+<div id="loading_WebAI"></div>
+<div id="frame_webAI">
+    <a href="/sign-in">
+        <div id="home--back">
+            <div id="arrow__page" class="arrow__style">
+                <svg height="25" width="26" style="margin-top: 2px;">
+                    <polyline points="18 17 12 12 18 7" style="fill: none; stroke: #5a5a5a; stroke-width: 3px;"></polyline>
+                </svg>
+            </div>
+            <span class="title--back">Quay lại</span>
+        </div>
+    </a>
+    <div id="account_container">
+        <div class="login--input">
+            <div id="login__style--input">
+                <div id="logo">
+                    <a href="/index">
+                        <img class="logo_style" src="{{ url_for('static',filename='img/apple-icon.png') }}" alt="logo-Web">
+                    </a>
+                    <span>Nhập mã xác thực</span>
+                </div>
+                <div class="frame--input">
+                    <form method="POST">
+                        <input class="username" name="code--verify" style="margin-bottom: 5px; border-color: rgb(221, 223, 226)" placeholder ="Enter Your Code" type="text" required pattern="\S+"/>
+                        {% if error %}
+                        <span class ="error_login" style="display: block">Mã xác thực không khớp !</span>
+                        {% endif %}
+                        <button id="btn_sigup" class="btn--sigup" style="margin-top: 13px;" name="click--sigup">Confirm</button>
+                        <div class="separate"> </div>
+                    </form>
+                    <form method="POST">
+                        <div class="passwod--forget" style="padding: 0px 59px; margin-bottom: 25px; margin-top: 0; margin-left: 50px;">
+                            <span style="color:#75757c;">Bạn cần hỗ trợ ?</span>
+                            {% if checkGive %}
+                            <span style="font-size: 17px; color: #aa6b4d;">Đã gửi</span>
+                            {% else %}
+                            <button style="border: none; background: none; font-size: 17px; color: #aa6b4d;" name="code--give_again">Gửi lại mã</button>
+                            {% endif %}
+                        </div>
+                    </form>
+                    <a href="/sign-up">
+                        <button class="btn--login" style="background-color: chartreuse;">Login</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

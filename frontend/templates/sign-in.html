@@ -1,0 +1,126 @@
+{% extends "baseLogin.html" %} {% block title %}Sign in{% endblock %} {% block content%}
+{%if check_session %}
+    <div style="position: fixed; z-index: 100; width: 100%; height: 100%; background: rgba(0,0,0,0.5); top: 0; left: 0; overflow: hidden; contain: layout;
+    animation-duration: .2s;">
+        <div style="    display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;">
+            <div style="display: flex; 
+        flex-direction: column; 
+        width: 570px; 
+        max-height: calc(100% - 20px);
+        background: #fff;
+        border: 1px solid #d6dbe1;
+        border-radius: 4px;
+        contain: layout;
+        max-height: 780px;
+        overflow: hidden;
+        animation-name: zoomIn;">
+            <div style="    padding: 0 8px 0 16px;
+            display: flex;
+            position: relative;
+            height: 48px;
+            min-height: 48px;
+            justify-content: left;
+            border-bottom: 1px solid #d6dbe1;
+            align-items: center;">
+                <span style="overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                font-size: 1.2rem;
+                font-weight: 500;
+                line-height: 1.5;
+                display: block;">Tài khoản bạn đang được đăng nhập ở một nơi khác</span>
+            </div>
+            <div style="padding: 14px 16px 29px;">Nhấn kích hoạt để thực hiện xác thực lại !</div>
+            <div>
+                <form method="post" style="display: flex; justify-content: flex-end;">
+                    <button style="height: 40px; background-color: #0068ff; line-height: 1.5;  box-sizing: border-box;border-radius: 3px;cursor: pointer;padding: 0 16px;font-size: 1rem;width: fit-content;min-width: max-content;font-weight: 600;color: aliceblue;border: none;margin: 0 12px 12px 0;" type="submit" name="check_ss">Kích hoạt</button>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+{%else%}
+{%if dialog['getPass'] %}
+    <div id="dialog" style="display: block; background-color: #59b217 !important; top: 12px;" >
+        <h2 style="color: aliceblue; font-size: 17px;">Thông báo</h2>
+        <div style="display: flex; align-items: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1rem" width="1rem" viewBox="0 0 512 512">
+                <path style="fill: aliceblue;" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+            </svg>
+            <p style="font-size: 18px !important; font-weight: 400 !important; margin: 0 0 8px 8px; color: cornsilk !important;">Cập nhật mật khẩu thành công !</p>
+            <br>
+        </div>
+    </div>
+{% elif dialog['signUp'] %}
+    <div id="dialog" style="display: block; background-color: #59b217 !important; top: 12px;" >
+        <h2 style="color: aliceblue; font-size: 17px;">Thông báo</h2>
+        <div style="display: flex; align-items: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1rem" width="1rem" viewBox="0 0 512 512">
+                <path style="fill: aliceblue;" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+            </svg>
+            <p style="font-size: 18px !important; font-weight: 400 !important; margin: 0 0 8px 8px; color: cornsilk !important;">Đăng ký thành công !</p>
+            <br>
+        </div>
+    </div>
+{%endif%}
+<div id="loading_WebAI"></div>
+<div id="frame_webAI">
+    <a id = "page--back" href="/">
+        <div id="home--back">
+            <div id="arrow__page" class="arrow__style">
+                <svg height="25" width="26" style="margin-top: 2px;">
+                    <polyline points="18 17 12 12 18 7" style="fill: none; stroke: #5a5a5a; stroke-width: 3px;"></polyline>
+                </svg>
+            </div>
+            <span class="title--back">Quay lại</span>
+        </div>
+    </a>
+    <div id="account_container">
+        <div class="login--input">
+            <div id="login__style--input">
+                <div id="logo">
+                    <a href="/">
+                        <img class="logo_style" src="{{ url_for('static',filename='img/apple-icon.png') }}" alt="logo-Web">
+                    </a>
+                    <span>Đăng nhập với AIShop</span>
+                </div>
+                <div class="frame--input">
+                    <form method="POST">
+                        <input class="username" name="username" placeholder="Email address" value = "" type="text" required pattern="\S+"/>
+                        <input class="password" type="password" name="password" placeholder="Password" value="" required pattern="\S+"/>
+                        <span class="error_login" style="display: block; margin-bottom: 22px; background: none; color: #321e1e;"><span style="color: #b62929; margin-left: 5px;">*</span>Nhập mã xác thực:</span>
+                        <div style=" display: flex; align-items: center; justify-content: space-between; width: 362px; margin: 0 0 24px 40px;">
+                            <div style=" width: 117px; height: 45px; margin-left: 12px;">
+                                <img style="height: 100%;" src="{{ url_for('static',filename='img/captcha_ss/') }}{{img_captcha}}" alt="">
+                            </div>
+                            <input class="username" name="captcha" placeholder="Captcha" type="text" required="" pattern="\S+" style=" width: 138px !important; min-width: 138px !important; height: 12px; margin: 0;">
+                        </div>
+                        {% if dialog['error'] %}
+                            <span class="error_login" style="display: block; margin-bottom: 22px;">Email hoặc mật khẩu không đúng!</span>
+                        {%elif dialog['error_captcha'] %}
+                            <span class="error_login" style="display: block; margin-bottom: 22px;">Mã xác thực không đúng hoặc đã hết hạn ! Vui lòng thử lại.</span>
+                        {%elif dialog['error_session'] %}    
+                            <span class="error_login" style="display: block; margin-bottom: 22px;">Phiên đăng nhập đã hết hạn ! Vui lòng thử lại.</span>
+                        {% endif %}
+                        <button id="btn_login" class="btn--login" name="click--login">Login</button>
+                        <div class="separate"></div>
+                    </form>
+                    <form method="post">
+                        <div class="password--forget" style="margin-top: 0; margin-bottom: 24px;">
+                            <span>Bạn quên mật khẩu ?</span>
+                            <button style="border: none; background: none; font-size: 17px; color: #aa6b4d;" name="pass--forget">Forget</button>
+                        </div>
+                    </form>
+                    <a href="/sign-up">
+                        <button class="btn--login" style="background-color: chartreuse;">Creat Account</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{%endif%}
+{% endblock %} 

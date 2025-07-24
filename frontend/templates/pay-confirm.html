@@ -1,0 +1,239 @@
+{% extends "baseView.html" %} {% block title %}AIShop{% endblock %} {% block content%}
+<div id="main" class="wrapper">
+    <div class="page-container container ">
+        <div id="main-content" class="row">
+            <div id="primary" class="site-content">
+                <article>
+                    <div class="col-md-12">
+                        <div class="breadcrumb clearfix">
+                            <ul style="display: flex;">
+                                <li itemtype="http://shema.org/Breadcrumb" itemscope="" class="home">
+                                    <a title="Đến trang chủ" href="/" itemprop="url">
+                                        <span itemprop="title" class ="title_home">Trang chủ</span>
+                                    </a>
+                                </li>
+                                <li class="icon-li">
+                                    <strong style="font-size: 17px; color: black; font-weight: bold;">Giỏ hàng</strong>
+                                </li>
+                                <li class="icon-li">
+                                    <strong style="font-size: 17px; color: black; font-weight: bold;">Thanh toán</strong>
+                                </li>
+                                <li class="icon-li">
+                                    <strong style="font-size: 17px; color: black; font-weight: bold;">Hoàn tất</strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="cart-content ng-scope" ng-controller="orderController" ng-init="initOrderCartController()">
+                            <h1 class="title"><span>HOÀN TẤT</span></h1>
+                            <div class="steps clearfix">
+                                <ul class="clearfix_check" style="display: flex;">
+                                    <hr class="styled-hr" style="height: 3px">
+                                    <li class="cart active col-md-2 col-xs-12 col-sm-4 col-md-offset-3 col-sm-offset-0 col-xs-offset-0"><span><i class="fa fa-shopping-cart"></i></span><span style="color: #7aaedd; font-size: 15px; font-weight: 500; background-color: #fbfbfb;">Giỏ hàng của tôi</span><span class="step-number"><a>1</a></span></li>
+                                    <li class="payment col-md-2 col-xs-12 col-sm-4"><span><i class="fa fa-credit-card" style="color: #2f7abe;" aria-hidden="true"></i></span><span style="color: #7aaedd; font-size: 15px;font-weight: 500; background-color: #fbfbfb;">Thanh toán</span><span class="step-number"><a  style="color: #ffffff; background-color: #2f7abe;">2</a></span></li>
+                                    <li class="finish col-md-2 col-xs-12 col-sm-4"><span><i class="fa fa-check" style="color: #2f7abe;"></i></span><span style="color: #7aaedd; font-size: 15px;font-weight: 500; background-color: #fbfbfb;">Hoàn tất</span><span class="step-number"><a  style="color: #ffffff; background-color: #2f7abe;">3</a></span></li>
+                                </ul>
+                            </div>
+                            <span><h2 class="title">1. Thông tin sản phẩm</h2></span>
+                            <div class="cart-block">
+                                <div class="cart-info table-responsive">
+                                    <table class="table product-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Sản phẩm</th>
+                                                <th>Hình ảnh</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Thành tiền</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if user.is_authenticated %}
+                                            {%for product in product_list %}
+                                            <tr ng-repeat="item in OrderDetails" class="ng-scope">
+                                                <td class="des">
+                                                    <a href="/san-pham/ao-kieu-nu-co-yem.html">
+                                                        <strong class="ng-binding text_limit">{{product['product'].name_product}}</strong>
+                                                    </a>
+                                                    <span class="ng-binding"></span>
+                                                </td>
+                                                <td class="image">
+                                                    <a href="/san-pham/ao-kieu-nu-co-yem.html"> <img ng-src="{{product['product'].img_product}}" class="img-responsive" src="{{product['product'].img_product}}"></a>
+                                                </td>
+                                                <td class="price ng-binding">{{product['product'].price}}đ</td>
+                                                <td class="quantity">
+                                                    <input type="number" value="{{product['quantity']}}" class="text ng-pristine ng-untouched ng-valid" ng-model="item.Quantity" ng-change="updateItemCart(item)" disabled>
+                                                </td>
+                                                <td class="amount ng-binding">
+                                                    {{ product['product'].price * product['quantity'] }}
+                                                </td>
+                                            </tr>
+                                            {%endfor%}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <span><h2 class="title">2. Thông tin khách hàng</h2></span>
+                        <script type="text/javascript">
+                            $(".link-site-more").hover(function () { $(this).find(".s-c-n").show(); }, function () { $(this).find(".s-c-n").hide(); });
+                        </script>
+                        <div class="cart-content ng-scope" ng-controller="orderController" ng-init="initOrderCartController()">
+                            <form method="post" class="payment-block clearfix ng-pristine ng-invalid ng-invalid-required ng-valid-email" id="checkout-container">
+                                {% if pay_info %}
+                                <div class="col-md-4 col-sm-12 col-xs-12 payment-step step2">
+                                    <h4>1. Thông tin KH, địa chỉ thanh toán</h4>
+                                    <div class="step-preview clearfix">
+                                        <h2 class="title">Thông tin khách hàng</h2>
+                                        <div class="form-block ng-scope" ng-if="CustomerId<=0">
+                                            <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Họ &amp; Tên" type="text" value="{{pay_info['name']}}" disabled></div>
+                                            <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Số điện thoại" type="text" value="{{pay_info['phone']}}" disabled></div>
+                                            <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-valid-email ng-invalid ng-invalid-required" style="font-size: 15px !important; font-weight: 400 !important;" placeholder="Email" type="email" value="{{pay_info['email']}}" disabled></div>
+                                            <h2 class="title" style="margin-top: 5px;">Địa chỉ nhận hàng</h2>
+                                            <div class="form-group">
+                                                <select class="ng-pristine ng-untouched ng-invalid ng-invalid-required form-control" name="city_address" ng-options="item.Id as item.Name for item in Provinces" ng-change="changeCustomerProvince()" disabled>
+                                                    <option selected="selected" value="{{pay_info['city_address']}}">{{pay_info['city_address']}}</option>
+                                                </select>
+                                            </div>
+                                            <textarea class="form-control ng-pristine ng-untouched ng-valid" rows="4" placeholder="Ghi chú đơn hàng" disabled>{{pay_info['note_address']}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12 payment-step step3">
+                                    <h4>2. Hình thức thanh toán</h4>
+                                    <div class="step-preview clearfix">
+                                        <h2 class="title">Thanh toán điện tử</h2>   
+                                        <div class="form-group">
+                                            <label for="bankcode">Ngân hàng</label>
+                                            <select name="bankcode" id="bankcode" class="form-control" disabled>
+                                                <option value="{{pay_info['pay_name']}}">{{pay_info['pay_name']}}</option>    
+                                            </select>
+                                        </div>
+                                        <div id="card_pay_VISA" style="display: none;">
+                                            <div style="display: flex; align-items: center;">
+                                                <label for="bankcode">Thông tin thẻ</label>                                                          
+                                                <div class="input-extend input-extend-right">
+                                                <div class="input-box input-ic-clear"></div>
+                                                    <div class="input-box input-extend-inner">
+                                                        <div class="logo-brands-small">
+                                                            <img src="./assets/img/logos/bank/visa.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="card_pay_MASTERCARD" style="display: none;">
+                                            <div style="display: flex; align-items: center;">
+                                                <label for="bankcode">Thông tin thẻ</label>
+                                                <div class="input-extend input-extend-right">
+                                                    <div class="input-box input-ic-clear"></div>
+                                                    <div class="input-box input-extend-inner">
+                                                        <div class="logo-brands-small">
+                                                            <img src="./assets/img/logos/bank/mastercard.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="card_pay_JCB" style="display: none;">
+                                            <div style="display: flex; align-items: center;">
+                                                <label for="bankcode">Thông tin thẻ</label>                                                          
+                                                <div class="input-extend input-extend-right">
+                                                <div class="input-box input-ic-clear"></div>
+                                                    <div class="input-box input-extend-inner">
+                                                        <div class="logo-brands-small">
+                                                            <img src="./assets/img/logos/bank/jcb.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="card_pay_NCB" style="display: none;">
+                                            <div style="display: flex; align-items: center;">
+                                                <label for="bankcode">Thông tin thẻ</label>
+                                                <div class="input-extend input-extend-right">
+                                                <div class="input-box input-ic-clear"></div>
+                                                    <div class="input-box input-extend-inner">
+                                                        <div class="logo-brands-small">
+                                                            <img src="./assets/img/logos/bank/ncb.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="card_pay_EXIMBANK" style="display: none;">
+                                            <div style="display: flex; align-items: center;">
+                                                <label for="bankcode">Thông tin thẻ</label>                                                          
+                                                <div class="input-extend input-extend-right">
+                                                <div class="input-box input-ic-clear"></div>
+                                                    <div class="input-box input-extend-inner">
+                                                        <div class="logo-brands-small">
+                                                            <img src="./assets/img/logos/bank/eximBank.png" style="width: 39px; margin-left: 15px; margin-bottom: 8px;" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="card_pay" style="display: none;">
+                                            <label class="label_pay" for="bankcode"><span style="color: red;">* </span>Số thẻ: </label>   
+                                            <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required font_pay" style="font-size: 15px !important; font-weight: 400 !important;" value="{{pay_info['card_number']}}" placeholder="Nhập số thẻ" type="digits" disabled></div>  
+                                            <div style="display: flex; justify-content: space-between;">
+                                                <label class="label_pay" style="flex: 0.4;" for="bankcode"><span style="color: red;">* </span>Ngày hết hạn: </label>
+                                                <label class="label_pay" style="flex: 0.38;" for="bankcode"><span style="color: red;">* </span>CVC/CVV: </label>
+                                            </div>
+                                            <div style="display: flex;">
+                                                <div class="form-group" style="margin-right: 4px;"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required font_pay" style="font-size: 15px !important; font-weight: 400 !important;" value="{{pay_info['date_expired']}}" placeholder="MM/YY" type="text" disabled></div>
+                                                <div class="form-group"><input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required font_pay" style="font-size: 15px !important; font-weight: 400 !important;" value="{{pay_info['cvv_cvc']}}" placeholder="CVC/CVV" type="digits" disabled></div>
+                                            </div>  
+                                        </div>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input id="resetCheckbox" checked="{{pay_info['check_pay_off']}}" type="checkbox" class="ng-pristine ng-untouched ng-valid" disabled> Thanh toán khi nhận hàng
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-12 col-xs-12 payment-step step1">
+                                    <h4>3. Thông tin đơn hàng</h4>
+                                    <div class="step-preview">
+                                        <div class="cart-info">
+                                            <div class="cart-items">
+                                            </div>
+                                            <div class="total-payment">
+                                                Thành tiền  <span class="ng-binding"> {{pay_info['total_price']}} ₫</span>
+                                            </div>
+                                            <div class="total-payment">
+                                                Phí vận chuyển  <span class="ng-binding">0 ₫</span>
+                                            </div>
+                                            <div class="total-payment">
+                                                Thanh toán <span class="ng-binding">{{pay_info['total_price']}} ₫</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </form>
+                        </div>
+                        <span><h2 class="title">3. Xác nhận thanh toán</h2></span>
+                        <form  method="post">
+                            <label class="label_pay" for="bankcode"><span style="color: red;">* </span>Mã xác thực: </label>  
+                            <div class="form-group" style="display: flex; align-items: flex-end;">
+                                <input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required font_pay" style="font-size: 15px !important; font-weight: 400 !important;" name="code--verify"  placeholder="Nhập mã xác thực" type="text" required="">
+                                {% if check_error %}
+                                <span style="font-size: 15px;color: red; font-weight: 400; margin-left: 11px;">Mã xác thực không khớp !</span>
+                                {% endif %} 
+                            </div>  
+                            <span style="font-size: 15px; background-color: antiquewhite; padding: 3px; font-weight: 400;">Mã xác thực đã được gửi về email người dùng. Vui lòng xác nhận mã tại email !</span> 
+                            <div class="button text-right" style="margin-bottom: 25px;">
+                                <a href="/" class="btn btn-default" name="pay_quit" type="submit">Hủy thanh toán</a>
+                                <button class="btn button button-secondary btn--hover" name="pay_confirm" type="submit">Tiến hành thanh toán</button>
+                            </div>
+                        </form>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

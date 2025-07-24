@@ -1,0 +1,141 @@
+{% extends "baseView.html" %} {% block title %}AIShop{% endblock %} {% block content%}
+<div id="main" class="wrapper">
+    <div class="page-container container ">
+        <div id="main-content" class="row">
+            <div id="primary" class="site-content">
+                <article>
+                    <div class="col-md-12">
+                        <div class="breadcrumb clearfix">
+                            <ul style="display: flex;">
+                                <li itemtype="http://shema.org/Breadcrumb" itemscope="" class="home">
+                                    <a title="Đến trang chủ" href="/" itemprop="url">
+                                        <span itemprop="title" class ="title_home">Trang chủ</span>
+                                    </a>
+                                </li>
+                                <li class="icon-li">
+                                    <strong style="font-size: 17px; color: black; font-weight: bold;">Giỏ hàng</strong>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="cart-content ng-scope" ng-controller="orderController" ng-init="initOrderCartController()">
+                            <h1 class="title"><span>GIỎ HÀNG CỦA TÔI</span></h1>
+                            <div class="steps clearfix">
+                                <ul class="clearfix_check" style="display: flex;">
+                                    <li class="cart active col-md-2 col-xs-12 col-sm-4 col-md-offset-3 col-sm-offset-0 col-xs-offset-0"><span><i class="fa fa-shopping-cart"></i></span><span style="color: #7aaedd; font-size: 15px; font-weight: 500;">Giỏ hàng của tôi</span><span class="step-number"><a>1</a></span></li>
+                                    <li class="payment col-md-2 col-xs-12 col-sm-4"><span><i class="fa fa-credit-card" aria-hidden="true"></i></span><span style="font-size: 15px;font-weight: 500;">Thanh toán</span><span class="step-number"><a>2</a></span></li>
+                                    <li class="finish col-md-2 col-xs-12 col-sm-4"><span><i class="fa fa-check"></i></span><span style="font-size: 15px;font-weight: 500;">Hoàn tất</span><span class="step-number"><a>3</a></span></li>
+                                </ul>
+                            </div>
+                            <div class="cart-block">
+                                <div class="cart-info table-responsive">
+                                    <table class="table product-list">
+                                        <thead>
+                                            <tr>
+                                                <th>Sản phẩm</th>
+                                                <th>Đơn giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Thành tiền</th>
+                                                <th>Thao tác</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if user.is_authenticated %}
+                                            {%for product in product_list %}
+                                                {% if product['status'] == 1 %}
+                                                    <tr ng-repeat="item in OrderDetails" class="ng-scope">
+                                                        <td class="des">
+                                                            <a href="/san-pham/ao-kieu-nu-co-yem.html">
+                                                                <strong class="ng-binding text_limit">{{product['product'].name_product}}</strong>
+                                                            </a>
+                                                            <span class="ng-binding"></span>
+                                                            <a href="/san-pham/ao-kieu-nu-co-yem.html" class="image" style="margin-left: 10px;"> <img ng-src="{{product['product'].img_product}}" class="img-responsive" src="{{product['product'].img_product}}"></a>
+                                                        </td>
+                                                        <td class="des">
+                                                            <strong id="price_produce" class="ng-binding">{{product['product'].price}}đ </strong>
+                                                            <span class="ng-binding"></span>
+                                                        </td>
+                                                        <td class="quantity">
+                                                            <input id="quantity_input" type="number" style="font-weight: bold;" value="{{product['quantity']}}" class="text ng-pristine ng-untouched ng-valid" disabled>
+                                                        </td>
+                                                        <td class="amount ng-binding">
+                                                            <strong id="price_total" class="ng-binding">{{ product['product'].price * product['quantity'] }}đ</strong>
+                                                        </td>
+                                                        <td class="remove">
+                                                            <a class="btn btn-default" href="/cart/{{product['product'].id_product}}">Xóa</a>
+                                                        </td>
+                                                    </tr>
+                                                {%endif%}
+                                            {%endfor%}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="clearfix text-right">
+                                    <span><b>Tổng thanh toán:</b></span>
+                                    <span class="pay-price ng-binding" style="color: #0202aa; font-weight: 400;">
+                                    </span>
+                                    
+                                </div>
+                                <div class="button text-right">
+                                    <a class="btn btn-default" href="/shop" onclick="window.history.back()">Tiếp tục mua hàng</a>
+                                    <form class="button button-secondary btn--hover" method="post">
+                                        <button class="btn button button-secondary btn--hover" name="pay-cart">Tiến hành thanh toán</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-content ng-scope" ng-controller="orderController" ng-init="initOrderCartController()">
+                            <h1 class="title"><span>LỊCH SỬ ĐƠN HÀNG</span></h1>
+                            <div class="steps clearfix">
+                            </div>
+                            <div class="cart-block">
+                                <div class="cart-info table-responsive">
+                                    <table class="table product-list">
+                                        <thead style="background-color: #354d82 !important;">
+                                            <tr>
+                                                <th>Sản phẩm</th>
+                                                <th>Trạng thái</th>
+                                                <th>Ngày đặt hàng</th>
+                                                <th>Địa chỉ nhận hàng</th>
+                                                <th>Thành tiền</th>
+                                                <th>Thao tác</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if user.is_authenticated %}
+                                                {% if order_list %}
+                                                    {%for item in order_list %}
+                                                    <tr ng-repeat="item in OrderDetails" class="ng-scope">
+                                                        <td class="des" style="display: flex;">
+                                                            <div class="image" style="margin-left: 10px;"> <img ng-src="" class="img-responsive" src="{{item['img_product']}}"></div>
+                                                            <a href="/shop-single/{{item['id_pro']}}">
+                                                                <span class="ng-binding text_limit" style="font-size: 15px">Chi tiết</span>
+                                                            </a>
+                                                        </td>
+                                                        <td> <span class="ng-binding" style="color: #ab7272; font-weight: 400;">{{item['status_order']}}</span></td>
+                                                        <td> <span class="ng-binding">{{item['date_pay']}}</span></td>
+                                                        <td> <span class="ng-binding text_limit">{{item['address_des']}}</span></td>
+                                                        <td> <span class="ng-binding">{{item['total_price']}}đ</span></td>
+                                                        <td>
+                                                            <form class="button button-secondary btn--hover" style="background-color: #ffffff; color: #000;" method="post">
+                                                                <button class="btn button button-secondary btn--hover" style="background-color: #ffffff; color: #000;" name="cancel_order">Hủy đơn hàng</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    {%endfor%}
+                                                {%endif%}
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

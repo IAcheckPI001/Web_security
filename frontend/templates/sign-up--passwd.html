@@ -1,0 +1,55 @@
+{% extends "baseLogin.html" %} {% block title %}Sign up - confirm your pasword{% endblock %} {% block content%}
+<div id="loading_WebAI"></div>
+<div id="frame_webAI">
+    <a href="/sign-up">
+        <div id="home--back">
+            <div id="arrow__page" class="arrow__style">
+                <svg height="25" width="26" style="margin-top: 2px;">
+                    <polyline points="18 17 12 12 18 7" style="fill: none; stroke: #5a5a5a; stroke-width: 3px;"></polyline>
+                </svg>
+            </div>
+            <span class="title--back">Quay lại</span>
+        </div>
+    </a>
+    <div id="account_container">
+        <div class="login--input">
+            <div id="login__style--input">
+                <div id="logo">
+                    <a href="/index">
+                        <img class="logo_style" src="{{ url_for('static',filename='img/apple-icon.png') }}" alt="logo-Web">
+                    </a>
+                    <span>
+                        Xác nhận mật khẩu
+                    </span>
+                </div>
+                <div class="frame--input">
+                    <form method="POST">
+                        <input id ="password" class="password" type="password" name="password" placeholder="New password" value="" required pattern="\S+"/>
+                        <input id ="confirm--password" class="password" type="password" style = "margin-bottom: 6px;" name="re--enter_password" placeholder="Re-enter password" value="" required pattern="\S+"/>
+                        {% if check_error %}
+                            <span class ="error_login" style="display: block">Gặp sự cố trong việc xác thực.. Vui lòng thử lại ?!</span>
+                        {% elif check_error1 %}
+                            <span class ="error_login" style="display: block">Mật khẩu đã được sử dụng trước đó, cập nhật mật khẩu mới !</span>
+                        {% endif %}
+                        
+                        <ol id="style__note--sigup">
+                            <li id="pass_8" class = "style_position--note"><span>Mật khẩu lớn hơn 12. </span><i id="pass_8-ico" style="color: #67bb14; display: none;" class="fa-solid fa-circle-check"></i> </li>
+                            <li id="pass_acsii" class = "style_position--note"><span>Có ký tự in hoa, thường và chữ số. </span><i id="pass_acsii-ico" style="color: #67bb14; display: none;" class="fa-solid fa-circle-check"></i></li>
+                            <li id ="pass_special" class = "style_position--note"><span>Có ký tự đặc biệt(@#). </span><i id ="pass_special-ico" style="color: #67bb14; display: none;" class="fa-solid fa-circle-check"></i></li>
+                        </ol>
+                        <button id="btn--sigup__verify" class="btn--sigup" style="background-color: rgb(173 173 218); margin-top: 20px;" name="click--sigup__verify">Confirm</button>
+                        <div class="password--forget" style="padding: 0px 59px;">
+                            <span style="color:#75757c;">Bạn cần hỗ trợ ?</span>
+                            <a href="" style="color:#aa6b4d;"><span>Help account</span></a>
+                        </div>
+                        <div class="separate"> </div>
+                    </form>
+                    <a href="/sign-in">
+                        <button class="btn--login" style="background-color: chartreuse;">Login</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

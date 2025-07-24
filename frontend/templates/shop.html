@@ -1,0 +1,227 @@
+{% extends "baseView.html" %} {% block title %}AIShop{% endblock %} {% block content%}
+<!-- Start Content -->
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-3">
+            <h1 class="h2 pb-4">Categories</h1>
+            <ul class="list-unstyled templatemo-accordion">
+                <li class="pb-3">
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                        Gender
+                        <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul class="collapse show list-unstyled pl-3">
+                        <li><a class="text-decoration-none" href="#">Đang phát triển</a></li>
+                    </ul>
+                </li>
+                <li class="pb-3">
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                        Sale
+                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul id="collapseTwo" class="collapse list-unstyled pl-3">
+                        <li><a class="text-decoration-none" href="#">Đang phát triển</a></li>
+                    </ul>
+                </li>
+                <li class="pb-3">
+                    <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
+                        Product
+                        <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+                    </a>
+                    <ul id="collapseThree" class="collapse list-unstyled pl-3">
+                        <li><a class="text-decoration-none" href="#">Đang phát triển</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="list-inline shop-top-menu pb-3 pt-1">
+                        <li class="list-inline-item">
+                            <a class="h3 text-dark text-decoration-none mr-3" href="#">Products</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 pb-4">
+                    <div class="d-flex">
+                        <select class="form-control">
+                            <option>Featured</option>
+                            <option>etc...</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {%for product in product_list%}
+                <div class="col-md-4">
+                    <div class="card mb-4 product-wap rounded-0">
+                        <div class="card rounded-0">
+                            <img class="card-img rounded-0 img-fluid" style="height: 255px;" src="{{product.img_product}}">
+                            <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                <ul class="list-unstyled">
+                                    <form method="post">
+                                        <input type="hidden" name="check_token" value="{{token}}">
+                                        <input type="hidden" name="id_product" value="{{product.id_product}}" readonly>
+                                        <li>
+                                            <button class="view_like btn btn-success text-white" name="like_product">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="1.1em" width ="1.2em" viewBox="0 0 512 512">
+                                                    <path style="fill: #ffff;" d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"/>
+                                                </svg>
+                                            </button>
+                                        </li>
+                                        <li><button class="btn btn-success text-white mt-2" name="view_product"><i class="far fa-eye"></i></button></li>
+                                        <li><button class="btn btn-success text-white mt-2" name="add_product"><i class="fas fa-cart-plus"></i></button></li>
+                                    </form>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a href="/shop-single/{{product.id_product}}" class="h3 text-decoration-none text_limit">{{product.name_product}}</a>
+                            <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                <li>Nhãn hiệu: <b>{{product.trademark}}</b></li>
+                            </ul>
+                            <ul class="list-unstyled d-flex mb-1">
+                                
+                                <li> Reviews: <b>
+                                    {% if product.review > 999 %}
+                                        {% set review_text = product.review | int %}
+                                        {% if review_text < 10000 %}
+                                            {{ (review_text / 1000) | round(1) }}k
+                                        {% else %}
+                                            {{ (review_text / 1000) | round(0) }}k
+                                        {% endif %}
+                                        {% else %}
+                                        {{ product.review }}
+                                    {% endif %}
+                                </b></li>
+                            </ul>
+                            <p class="text-left mb-0">Giá tiền: <b>{{product.price}}</b></p>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            <div div="row">
+                <ul class="pagination pagination-lg justify-content-end">
+                    <li class="page-item disabled">
+                        <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- End Content -->
+
+<!-- Start Brands -->
+<section class="bg-light py-5">
+    <div class="container my-4">
+        <div class="row text-center py-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1"><b>Our brands</b></h1>
+                <p>
+                    Các thương hiệu khác
+                </p>
+            </div>
+            <div class="col-lg-9 m-auto tempaltemo-carousel">
+                <div class="row d-flex flex-row">
+                    <!--Controls-->
+                    <div class="col-1 align-self-center">
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="prev">
+                            <i class="text-light fas fa-chevron-left"></i>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+
+                    <!--Carousel Wrapper-->
+                    <div class="col">
+                        <div class="carousel slide carousel-multi-item pt-2 pt-md-0" id="multi-item-example" data-bs-ride="carousel">
+                            <!--Slides-->
+                            <div class="carousel-inner product-links-wap" role="listbox">
+
+                                <!--First slide-->
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Bbia.jpg') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Catrice.png') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/LOreal Paris.png') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Maybelline New York.png') }}" alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End First slide-->
+
+                                <!--Second slide-->
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Truesky.jpg') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Bbia.jpg') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Catrice.png') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/LOreal Paris.png') }}" alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Second slide-->
+
+                                <!--Third slide-->
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Truesky.jpg') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Bbia.jpg') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/Catrice.png') }}" alt="Brand Logo"></a>
+                                        </div>
+                                        <div class="col-3 p-md-5">
+                                            <a href="#"><img class="img-fluid brand-img" src="{{ url_for('static',filename='img/trademark/LOreal Paris.png') }}" alt="Brand Logo"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End Third slide-->
+
+                            </div>
+                            <!--End Slides-->
+                        </div>
+                    </div>
+                    <!--End Carousel Wrapper-->
+
+                    <!--Controls-->
+                    <div class="col-1 align-self-center">
+                        <a class="h1" href="#multi-item-example" role="button" data-bs-slide="next">
+                            <i class="text-light fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                    <!--End Controls-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Brands-->
+{% endblock %}

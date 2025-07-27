@@ -18,7 +18,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
     
     # config_dt = Config_database('hjshjhdjah kjshkjdhjs', 'mssql+pyodbc://syscus02:cus123#@muadonglanhleo\MIX/AIShop?driver=SQL+Server', False) # Used for MSSQL
-    config_dt = Config_database('hjshjhdjah kjshkjdhjs', 'postgresql://syscus02:cus123#@localhost:5432/AIShop', False)  # Used for PostgreSQL   
+    config_dt = Config_database('hjshjhdjah kjshkjdhjs', 'postgresql://aishop_fcnx_user:Cip1rQbIPnSDo1J7sbdyi7yz7ku9jGlv@dpg-d22utoje5dus73a2cnfg-a/aishop_fcnx', False)  # Used for PostgreSQL   
 
     app.config.from_object(config_dt)
     

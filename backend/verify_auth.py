@@ -11,7 +11,7 @@ from email.mime.text import MIMEText
 from captcha.image import ImageCaptcha
 
 
-app = Flask(__name__,template_folder="../frontend/templates",static_folder="../front_end/assets")
+app = Flask(__name__,template_folder="../frontend/templates",static_folder="../frontend/assets")
 
 folder_path = f'{app.static_folder}/img/captcha_ss/'
 
